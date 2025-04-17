@@ -1,0 +1,7 @@
+SELECT test.reader.id AS reader_id, test.reader.full_name, COUNT(test.book_from_reader.book_id) AS total_books_issued
+FROM test.book_from_reader
+JOIN test.reader ON test.book_from_reader.reader_id = test.reader.id
+WHERE test.book_from_reader.issued_at BETWEEN CURRENT_DATE - INTERVAL '30 days' AND CURRENT_DATE
+GROUP BY test.reader.id, test.reader.full_name
+ORDER BY total_books_issued DESC
+LIMIT 10;

@@ -1,0 +1,7 @@
+Добавляем книгу
+INSERT INTO test.book (id, title, author, year, isbn, publisher, status_id)
+VALUES (100, 'Пример', 'Пример', 2020, '1234567890123', 'Пример', 1);
+
+Кладём книгу на полку
+INSERT INTO test.book_on_shelves (id, book_id, shelves_id)
+VALUES (200, 100, 3);

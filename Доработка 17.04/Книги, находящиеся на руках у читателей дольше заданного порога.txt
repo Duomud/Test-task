@@ -1,0 +1,6 @@
+SELECT book.id, book.title, reader.full_name, book_from_reader.issued_at
+FROM test.book_from_reader
+JOIN test.book ON book_from_reader.book_id = book.id
+JOIN test.reader ON book_from_reader.reader_id = reader.id
+WHERE book_from_reader.returned_at IS NULL
+AND CURRENT_DATE - book_from_reader.issued_at > 15;

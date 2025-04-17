@@ -1,0 +1,11 @@
+SELECT 
+test.librarians.id AS librarian_id,
+test.librarians.full_name AS librarian_name,
+COUNT(DISTINCT test.book_from_reader.reader_id) AS unique_readers_served
+FROM test.book_from_reader
+JOIN test.book_on_shelves ON test.book_from_reader.book_id = test.book_on_shelves.book_id
+JOIN test.shelves ON test.book_on_shelves.shelves_id = test.shelves.id
+JOIN test.librarians ON test.shelves.room_id = test.librarians.room_id
+WHERE test.book_from_reader.issued_at BETWEEN DATE '2025-03-21' AND DATE '2025-04-10'
+GROUP BY test.librarians.id, test.librarians.full_name
+ORDER BY unique_readers_served DESC;

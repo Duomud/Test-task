@@ -1,0 +1,8 @@
+Обновляем дату возврата в таблице выдачи
+UPDATE test.book_from_reader
+SET returned_at = CURRENT_DATE
+WHERE book_id = 100 AND reader_id = 5 AND returned_at IS NULL;
+
+Возвращаем книгу на полку
+INSERT INTO test.book_on_shelves (id, book_id, shelves_id)
+VALUES (100, 100, 3);

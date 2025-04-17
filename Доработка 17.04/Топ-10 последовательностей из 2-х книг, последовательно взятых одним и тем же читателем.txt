@@ -1,0 +1,25 @@
+SELECT test.reader.full_name AS reader_name, book1.title AS first_book, book2.title AS second_book, COUNT(*) AS count
+FROM (
+    SELECT test.book_from_reader.reader_id,
+ 	   test.book_from_reader.book_id AS first_book_id,
+ 	   second_bfr.book_id AS second_book_id,
+ 	   test.book_from_reader.issued_at AS first_issued_at,
+           second_bfr.issued_at AS second_issued_at
+    FROM test.book_from_reader
+    JOIN test.book_from_reader AS second_bfr ON test.book_from_reader.reader_id = second_bfr.reader_id
+        AND test.book_from_reader.issued_at < second_bfr.issued_at
+        AND test.book_from_reader.book_id != second_bfr.book_id
+    WHERE NOT EXISTS (
+        SELECT 1
+        FROM test.book_from_reader AS bfr_mid
+        WHERE bfr_mid.reader_id = test.book_from_reader.reader_id
+        AND bfr_mid.issued_at > test.book_from_reader.issued_at
+        AND bfr_mid.issued_at < second_bfr.issued_at
+    )
+) AS book_pairs
+JOIN test.reader ON book_pairs.reader_id = test.reader.id
+JOIN test.book AS book1 ON book_pairs.first_book_id = book1.id
+JOIN test.book AS book2 ON book_pairs.second_book_id = book2.id
+GROUP BY test.reader.full_name, book1.title, book2.title
+ORDER BY count DESC
+LIMIT 10;

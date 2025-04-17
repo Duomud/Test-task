@@ -1,0 +1,7 @@
+SELECT book.id, book.title, COUNT(book_from_reader.reader_id) AS total_issues
+FROM test.book_from_reader
+JOIN test.book ON book_from_reader.book_id = book.id
+WHERE book_from_reader.issued_at BETWEEN DATE '2025-03-21' AND DATE '2025-04-10'
+GROUP BY book.id, book.title
+ORDER BY total_issues DESC
+LIMIT 10;

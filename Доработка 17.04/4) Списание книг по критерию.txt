@@ -1,0 +1,15 @@
+Находим книги для списания
+SELECT id, title, author, year
+FROM test.book
+WHERE year < 2000;
+
+2. Меняем статус книги
+UPDATE test.book
+SET status_id = 3
+WHERE year < 2000;
+
+3. Удаляем книги с полок 
+DELETE FROM test.book_on_shelves
+WHERE book_id IN (
+    SELECT id FROM test.book WHERE year < 2000
+);

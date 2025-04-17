@@ -1,0 +1,7 @@
+Добавляем запись о выдаче
+INSERT INTO test.book_from_reader (id, book_id, reader_id, issued_at, returned_at)
+VALUES (100, 100, 5, CURRENT_DATE, NULL);
+
+Убираем книгу с полки
+DELETE FROM test.book_on_shelves
+WHERE book_id = 100;

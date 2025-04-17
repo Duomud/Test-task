@@ -1,0 +1,7 @@
+
+SELECT reader.id, reader.full_name, COUNT(*) AS visits
+FROM test.book_from_reader 
+JOIN test.reader ON book_from_reader.reader_id = reader.id
+GROUP BY reader.id, reader.full_name
+ORDER BY visits DESC
+LIMIT 10;
